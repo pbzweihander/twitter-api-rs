@@ -127,7 +127,6 @@ ALIASES['twitter_api'] = {};
 ALIASES['twitter_api'] = {};
 ALIASES['twitter_api'] = {};
 ALIASES['twitter_api'] = {};
-ALIASES['twitter_api'] = {};
 ALIASES['unicase'] = {};
 ALIASES['unicase'] = {};
 ALIASES['unicode_bidi'] = {};
