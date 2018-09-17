@@ -50,6 +50,17 @@ that trigger right-to-left processing or is all-Latin1.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.convert_latin1_to_str_partial.html"
+                                  title='fn encoding_rs::mem::convert_latin1_to_str_partial'>convert_latin1_to_str_partial</a></td>
+                           <td class='docblock-short'>
+                                <p>Converts bytes whose unsigned value is interpreted as Unicode code point
+(i.e. U+0000 to U+00FF, inclusive) to UTF-8 such that the validity of the
+output is signaled using the Rust type system with potentially insufficient
+output space.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.convert_latin1_to_str.html"
                                   title='fn encoding_rs::mem::convert_latin1_to_str'>convert_latin1_to_str</a></td>
                            <td class='docblock-short'>
@@ -60,12 +71,11 @@ output is signaled using the Rust type system.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.convert_latin1_to_str_partial.html"
-                                  title='fn encoding_rs::mem::convert_latin1_to_str_partial'>convert_latin1_to_str_partial</a></td>
+                           <td><a class="fn" href="fn.convert_latin1_to_utf8_partial.html"
+                                  title='fn encoding_rs::mem::convert_latin1_to_utf8_partial'>convert_latin1_to_utf8_partial</a></td>
                            <td class='docblock-short'>
                                 <p>Converts bytes whose unsigned value is interpreted as Unicode code point
-(i.e. U+0000 to U+00FF, inclusive) to UTF-8 such that the validity of the
-output is signaled using the Rust type system with potentially insufficient
+(i.e. U+0000 to U+00FF, inclusive) to UTF-8 with potentially insufficient
 output space.</p>
 
                            </td>
@@ -89,41 +99,10 @@ output space.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.convert_latin1_to_utf8_partial.html"
-                                  title='fn encoding_rs::mem::convert_latin1_to_utf8_partial'>convert_latin1_to_utf8_partial</a></td>
-                           <td class='docblock-short'>
-                                <p>Converts bytes whose unsigned value is interpreted as Unicode code point
-(i.e. U+0000 to U+00FF, inclusive) to UTF-8 with potentially insufficient
-output space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.convert_str_to_utf16.html"
                                   title='fn encoding_rs::mem::convert_str_to_utf16'>convert_str_to_utf16</a></td>
                            <td class='docblock-short'>
                                 <p>Converts valid UTF-8 to valid UTF-16.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.convert_utf16_to_latin1_lossy.html"
-                                  title='fn encoding_rs::mem::convert_utf16_to_latin1_lossy'>convert_utf16_to_latin1_lossy</a></td>
-                           <td class='docblock-short'>
-                                <p>If the input is valid UTF-16 representing only Unicode code points from
-U+0000 to U+00FF, inclusive, converts the input into output that
-represents the value of each code point as the unsigned byte value of
-each output byte.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.convert_utf16_to_str.html"
-                                  title='fn encoding_rs::mem::convert_utf16_to_str'>convert_utf16_to_str</a></td>
-                           <td class='docblock-short'>
-                                <p>Converts potentially-invalid UTF-16 to valid UTF-8 with errors replaced
-with the REPLACEMENT CHARACTER such that the validity of the output is
-signaled using the Rust type system.</p>
 
                            </td>
                        </tr>
@@ -139,11 +118,23 @@ space.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.convert_utf16_to_utf8.html"
-                                  title='fn encoding_rs::mem::convert_utf16_to_utf8'>convert_utf16_to_utf8</a></td>
+                           <td><a class="fn" href="fn.convert_utf16_to_str.html"
+                                  title='fn encoding_rs::mem::convert_utf16_to_str'>convert_utf16_to_str</a></td>
                            <td class='docblock-short'>
                                 <p>Converts potentially-invalid UTF-16 to valid UTF-8 with errors replaced
-with the REPLACEMENT CHARACTER.</p>
+with the REPLACEMENT CHARACTER such that the validity of the output is
+signaled using the Rust type system.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.convert_utf16_to_latin1_lossy.html"
+                                  title='fn encoding_rs::mem::convert_utf16_to_latin1_lossy'>convert_utf16_to_latin1_lossy</a></td>
+                           <td class='docblock-short'>
+                                <p>If the input is valid UTF-16 representing only Unicode code points from
+U+0000 to U+00FF, inclusive, converts the input into output that
+represents the value of each code point as the unsigned byte value of
+each output byte.</p>
 
                            </td>
                        </tr>
@@ -154,6 +145,15 @@ with the REPLACEMENT CHARACTER.</p>
                                 <p>Converts potentially-invalid UTF-16 to valid UTF-8 with errors replaced
 with the REPLACEMENT CHARACTER with potentially insufficient output
 space.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.convert_utf16_to_utf8.html"
+                                  title='fn encoding_rs::mem::convert_utf16_to_utf8'>convert_utf16_to_utf8</a></td>
+                           <td class='docblock-short'>
+                                <p>Converts potentially-invalid UTF-16 to valid UTF-8 with errors replaced
+with the REPLACEMENT CHARACTER.</p>
 
                            </td>
                        </tr>
@@ -258,6 +258,15 @@ to U+00FF.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.is_utf8_bidi.html"
+                                  title='fn encoding_rs::mem::is_utf8_bidi'>is_utf8_bidi</a></td>
+                           <td class='docblock-short'>
+                                <p>Checks whether a potentially-invalid UTF-8 buffer contains code points
+that trigger right-to-left processing.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.is_utf16_bidi.html"
                                   title='fn encoding_rs::mem::is_utf16_bidi'>is_utf16_bidi</a></td>
                            <td class='docblock-short'>
@@ -280,15 +289,6 @@ right-to-left processing.</p>
                            <td class='docblock-short'>
                                 <p>Checks whether the buffer represents only code point less than or equal
 to U+00FF.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="fn" href="fn.is_utf8_bidi.html"
-                                  title='fn encoding_rs::mem::is_utf8_bidi'>is_utf8_bidi</a></td>
-                           <td class='docblock-short'>
-                                <p>Checks whether a potentially-invalid UTF-8 buffer contains code points
-that trigger right-to-left processing.</p>
 
                            </td>
                        </tr>
