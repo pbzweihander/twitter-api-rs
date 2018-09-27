@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-reactor-0.1.5/src/sharded_rwlock.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sharded_rwlock.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-reactor-0.1.6/src/sharded_rwlock.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sharded_rwlock.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -214,6 +214,7 @@
 <span id="214">214</span>
 <span id="215">215</span>
 <span id="216">216</span>
+<span id="217">217</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A scalable reader-writer lock.</span>
 <span class="doccomment">//!</span>
@@ -367,11 +368,12 @@
 
 <span class="doccomment">/// Returns a `usize` that identifies the current thread.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Each thread is associated with an &#39;index&#39;. While there are no particular guarantees, indices</span>
-<span class="doccomment">/// usually tend to be consecutive numbers between 0 and the number of running threads.</span>
+<span class="doccomment">/// Each thread is associated with an &#39;index&#39;. Indices usually tend to be consecutive numbers</span>
+<span class="doccomment">/// between 0 and the number of running threads, but there are no guarantees. During TLS teardown</span>
+<span class="doccomment">/// the associated index might change.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">thread_index</span>() <span class="op">-&gt;</span> <span class="ident">usize</span> {
-    <span class="ident">REGISTRATION</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">reg</span><span class="op">|</span> <span class="ident">reg</span>.<span class="ident">index</span>)
+    <span class="ident">REGISTRATION</span>.<span class="ident">try_with</span>(<span class="op">|</span><span class="ident">reg</span><span class="op">|</span> <span class="ident">reg</span>.<span class="ident">index</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>)
 }
 
 <span class="doccomment">/// The global registry keeping track of registered threads and indices.</span>

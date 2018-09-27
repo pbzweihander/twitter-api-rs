@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-timer-0.2.6/src/timeout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>timeout.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-timer-0.2.7/src/timeout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>timeout.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -278,6 +278,36 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Allows a future or stream to execute for a maximum amount of time.</span>
 <span class="doccomment">//!</span>
@@ -296,7 +326,7 @@
 
 <span class="doccomment">/// Allows a `Future` or `Stream` to execute for a limited amount of time.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If thee future or stream completes before the timeout has expired, then</span>
+<span class="doccomment">/// If the future or stream completes before the timeout has expired, then</span>
 <span class="doccomment">/// `Timeout` returns the completed value. Otherwise, `Timeout` returns an</span>
 <span class="doccomment">/// [`Error`].</span>
 <span class="doccomment">///</span>
@@ -314,8 +344,10 @@
 <span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// # extern crate futures;</span>
 <span class="doccomment">/// # extern crate tokio;</span>
-<span class="doccomment">/// use tokio::timer::Timeout;</span>
-<span class="doccomment">/// use futures::{Future, Stream};</span>
+<span class="doccomment">/// // import the `timeout` function, usually this is done</span>
+<span class="doccomment">/// // with `use tokio::prelude::*`</span>
+<span class="doccomment">/// use tokio::prelude::FutureExt;</span>
+<span class="doccomment">/// use futures::Stream;</span>
 <span class="doccomment">/// use futures::sync::mpsc;</span>
 <span class="doccomment">/// use std::time::Duration;</span>
 <span class="doccomment">///</span>
@@ -323,20 +355,24 @@
 <span class="doccomment">/// let (tx, rx) = mpsc::unbounded();</span>
 <span class="doccomment">/// # tx.unbounded_send(()).unwrap();</span>
 <span class="doccomment">/// # drop(tx);</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// let process = rx.for_each(|item| {</span>
-<span class="doccomment">///     // do something with `iteem`</span>
+<span class="doccomment">///     // do something with `item`</span>
 <span class="doccomment">/// # drop(item);</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// });</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Timeout::new(process, Duration::from_secs(1));</span>
+<span class="doccomment">/// # tokio::runtime::current_thread::block_on_all(</span>
+<span class="doccomment">/// // Wrap the future with a `Timeout` set to expire in 10 milliseconds.</span>
+<span class="doccomment">/// process.timeout(Duration::from_millis(10))</span>
+<span class="doccomment">/// # ).unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Cancelation</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Cancelling a `Timeout` is done by dropping the value. No additional cleanup</span>
-<span class="doccomment">/// or otheer work is required.</span>
+<span class="doccomment">/// or other work is required.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The original future or stream may be obtained by calling [`into_inner`]. This</span>
 <span class="doccomment">/// consumes the `Timeout`.</span>
@@ -375,6 +411,29 @@
     <span class="doccomment">/// See [type] level documentation for more details.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [type]: #</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Create a new `Timeout` set to expire in 10 milliseconds.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # extern crate futures;</span>
+    <span class="doccomment">/// # extern crate tokio;</span>
+    <span class="doccomment">/// use tokio::timer::Timeout;</span>
+    <span class="doccomment">/// use futures::Future;</span>
+    <span class="doccomment">/// use futures::sync::oneshot;</span>
+    <span class="doccomment">/// use std::time::Duration;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// let (tx, rx) = oneshot::channel();</span>
+    <span class="doccomment">/// # tx.send(()).unwrap();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # tokio::runtime::current_thread::block_on_all(</span>
+    <span class="doccomment">/// // Wrap the future with a `Timeout` set to expire in 10 milliseconds.</span>
+    <span class="doccomment">/// Timeout::new(rx, Duration::from_millis(10))</span>
+    <span class="doccomment">/// # ).unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">timeout</span>: <span class="ident">Duration</span>) <span class="op">-&gt;</span> <span class="ident">Timeout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">delay</span> <span class="op">=</span> <span class="ident">Delay</span>::<span class="ident">new_timeout</span>(<span class="ident">now</span>() <span class="op">+</span> <span class="ident">timeout</span>, <span class="ident">timeout</span>);
 
@@ -466,6 +525,7 @@
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">delay</span>.<span class="ident">poll</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>),
             <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">delay</span>.<span class="ident">reset_timeout</span>();
                 <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">elapsed</span>())
             },
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">timer</span>(<span class="ident">e</span>)),
