@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.7/src/mem.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mem.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.8/src/mem.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mem.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -3059,6 +3059,85 @@
 <span id="3059">3059</span>
 <span id="3060">3060</span>
 <span id="3061">3061</span>
+<span id="3062">3062</span>
+<span id="3063">3063</span>
+<span id="3064">3064</span>
+<span id="3065">3065</span>
+<span id="3066">3066</span>
+<span id="3067">3067</span>
+<span id="3068">3068</span>
+<span id="3069">3069</span>
+<span id="3070">3070</span>
+<span id="3071">3071</span>
+<span id="3072">3072</span>
+<span id="3073">3073</span>
+<span id="3074">3074</span>
+<span id="3075">3075</span>
+<span id="3076">3076</span>
+<span id="3077">3077</span>
+<span id="3078">3078</span>
+<span id="3079">3079</span>
+<span id="3080">3080</span>
+<span id="3081">3081</span>
+<span id="3082">3082</span>
+<span id="3083">3083</span>
+<span id="3084">3084</span>
+<span id="3085">3085</span>
+<span id="3086">3086</span>
+<span id="3087">3087</span>
+<span id="3088">3088</span>
+<span id="3089">3089</span>
+<span id="3090">3090</span>
+<span id="3091">3091</span>
+<span id="3092">3092</span>
+<span id="3093">3093</span>
+<span id="3094">3094</span>
+<span id="3095">3095</span>
+<span id="3096">3096</span>
+<span id="3097">3097</span>
+<span id="3098">3098</span>
+<span id="3099">3099</span>
+<span id="3100">3100</span>
+<span id="3101">3101</span>
+<span id="3102">3102</span>
+<span id="3103">3103</span>
+<span id="3104">3104</span>
+<span id="3105">3105</span>
+<span id="3106">3106</span>
+<span id="3107">3107</span>
+<span id="3108">3108</span>
+<span id="3109">3109</span>
+<span id="3110">3110</span>
+<span id="3111">3111</span>
+<span id="3112">3112</span>
+<span id="3113">3113</span>
+<span id="3114">3114</span>
+<span id="3115">3115</span>
+<span id="3116">3116</span>
+<span id="3117">3117</span>
+<span id="3118">3118</span>
+<span id="3119">3119</span>
+<span id="3120">3120</span>
+<span id="3121">3121</span>
+<span id="3122">3122</span>
+<span id="3123">3123</span>
+<span id="3124">3124</span>
+<span id="3125">3125</span>
+<span id="3126">3126</span>
+<span id="3127">3127</span>
+<span id="3128">3128</span>
+<span id="3129">3129</span>
+<span id="3130">3130</span>
+<span id="3131">3131</span>
+<span id="3132">3132</span>
+<span id="3133">3133</span>
+<span id="3134">3134</span>
+<span id="3135">3135</span>
+<span id="3136">3136</span>
+<span id="3137">3137</span>
+<span id="3138">3138</span>
+<span id="3139">3139</span>
+<span id="3140">3140</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2015-2016 Mozilla Foundation. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution.</span>
@@ -3731,11 +3810,14 @@
 <span class="doccomment">/// that trigger right-to-left processing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The check is done on a Unicode block basis without regard to assigned</span>
-<span class="doccomment">/// vs. unassigned code points in the block. Additionally, the four</span>
-<span class="doccomment">/// RIGHT-TO-LEFT FOO controls in General Punctuation are checked for.</span>
-<span class="doccomment">/// Control characters that are technically bidi controls but do not cause</span>
-<span class="doccomment">/// right-to-left behavior without the presence of right-to-left characters</span>
-<span class="doccomment">/// or right-to-left controls are not checked for.</span>
+<span class="doccomment">/// vs. unassigned code points in the block. Hebrew presentation forms in</span>
+<span class="doccomment">/// the Alphabetic Presentation Forms block are treated as if they formed</span>
+<span class="doccomment">/// a block on their own (i.e. it treated as right-to-left). Additionally,</span>
+<span class="doccomment">/// the four RIGHT-TO-LEFT FOO controls in General Punctuation are checked</span>
+<span class="doccomment">/// for. Control characters that are technically bidi controls but do not</span>
+<span class="doccomment">/// cause right-to-left behavior without the presence of right-to-left</span>
+<span class="doccomment">/// characters or right-to-left controls are not checked for. As a special</span>
+<span class="doccomment">/// case, U+FEFF is excluded from Arabic Presentation Forms-B.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Returns `true` if the input is invalid UTF-8 or the input contains an</span>
 <span class="doccomment">/// RTL character. Returns `false` if the input is valid UTF-8 and contains</span>
@@ -3761,15 +3843,15 @@
     <span class="comment">// U+202E: E2 80 AE</span>
     <span class="comment">// U+2067: E2 81 A7</span>
     <span class="comment">//</span>
-    <span class="comment">// U+FB4F: EF AD 8F</span>
-    <span class="comment">// U+FB50: EF AD 90</span>
+    <span class="comment">// U+FB1C: EF AC 9C</span>
+    <span class="comment">// U+FB1D: EF AC 9D</span>
     <span class="comment">// U+FDFF: EF B7 BF</span>
     <span class="comment">// U+FE00: EF B8 80</span>
     <span class="comment">//</span>
     <span class="comment">// U+FE6F: EF B9 AF</span>
     <span class="comment">// U+FE70: EF B9 B0</span>
+    <span class="comment">// U+FEFE: EF BB BE</span>
     <span class="comment">// U+FEFF: EF BB BF</span>
-    <span class="comment">// U+FF00: EF BC 80</span>
     <span class="comment">//</span>
     <span class="comment">// U+107FF: F0 90 9F BF</span>
     <span class="comment">// U+10800: F0 90 A0 80</span>
@@ -3859,9 +3941,9 @@
                             {
                                 <span class="kw">return</span> <span class="bool-val">true</span>;
                             }
-                            <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAD</span>, <span class="number">0xB7</span>) {
-                                <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAD</span> {
-                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x8F</span> {
+                            <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAC</span>, <span class="number">0xB7</span>) {
+                                <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAC</span> {
+                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x9C</span> {
                                         <span class="kw">return</span> <span class="bool-val">true</span>;
                                     }
                                 } <span class="kw">else</span> {
@@ -3870,6 +3952,10 @@
                             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xB9</span>, <span class="number">0xBB</span>) {
                                 <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xB9</span> {
                                     <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0xAF</span> {
+                                        <span class="kw">return</span> <span class="bool-val">true</span>;
+                                    }
+                                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xBB</span> {
+                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">!=</span> <span class="number">0xBF</span> {
                                         <span class="kw">return</span> <span class="bool-val">true</span>;
                                     }
                                 } <span class="kw">else</span> {
@@ -4075,9 +4161,9 @@
                     {
                         <span class="kw">return</span> <span class="bool-val">true</span>;
                     }
-                    <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAD</span>, <span class="number">0xB7</span>) {
-                        <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAD</span> {
-                            <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x8F</span> {
+                    <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAC</span>, <span class="number">0xB7</span>) {
+                        <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAC</span> {
+                            <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x9C</span> {
                                 <span class="kw">return</span> <span class="bool-val">true</span>;
                             }
                         } <span class="kw">else</span> {
@@ -4086,6 +4172,10 @@
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xB9</span>, <span class="number">0xBB</span>) {
                         <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xB9</span> {
                             <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0xAF</span> {
+                                <span class="kw">return</span> <span class="bool-val">true</span>;
+                            }
+                        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xBB</span> {
+                            <span class="kw">if</span> <span class="ident">third</span> <span class="op">!=</span> <span class="number">0xBF</span> {
                                 <span class="kw">return</span> <span class="bool-val">true</span>;
                             }
                         } <span class="kw">else</span> {
@@ -4145,11 +4235,14 @@
 <span class="doccomment">/// right-to-left processing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The check is done on a Unicode block basis without regard to assigned</span>
-<span class="doccomment">/// vs. unassigned code points in the block. Additionally, the four</span>
-<span class="doccomment">/// RIGHT-TO-LEFT FOO controls in General Punctuation are checked for.</span>
-<span class="doccomment">/// Control characters that are technically bidi controls but do not cause</span>
-<span class="doccomment">/// right-to-left behavior without the presence of right-to-left characters</span>
-<span class="doccomment">/// or right-to-left controls are not checked for.</span>
+<span class="doccomment">/// vs. unassigned code points in the block. Hebrew presentation forms in</span>
+<span class="doccomment">/// the Alphabetic Presentation Forms block are treated as if they formed</span>
+<span class="doccomment">/// a block on their own (i.e. it treated as right-to-left). Additionally,</span>
+<span class="doccomment">/// the four RIGHT-TO-LEFT FOO controls in General Punctuation are checked</span>
+<span class="doccomment">/// for. Control characters that are technically bidi controls but do not</span>
+<span class="doccomment">/// cause right-to-left behavior without the presence of right-to-left</span>
+<span class="doccomment">/// characters or right-to-left controls are not checked for. As a special</span>
+<span class="doccomment">/// case, U+FEFF is excluded from Arabic Presentation Forms-B.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_str_bidi</span>(<span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// U+058F: D6 8F</span>
@@ -4162,15 +4255,15 @@
     <span class="comment">// U+202E: E2 80 AE</span>
     <span class="comment">// U+2067: E2 81 A7</span>
     <span class="comment">//</span>
-    <span class="comment">// U+FB4F: EF AD 8F</span>
-    <span class="comment">// U+FB50: EF AD 90</span>
+    <span class="comment">// U+FB1C: EF AC 9C</span>
+    <span class="comment">// U+FB1D: EF AC 9D</span>
     <span class="comment">// U+FDFF: EF B7 BF</span>
     <span class="comment">// U+FE00: EF B8 80</span>
     <span class="comment">//</span>
     <span class="comment">// U+FE6F: EF B9 AF</span>
     <span class="comment">// U+FE70: EF B9 B0</span>
+    <span class="comment">// U+FEFE: EF BB BE</span>
     <span class="comment">// U+FEFF: EF BB BF</span>
-    <span class="comment">// U+FF00: EF BC 80</span>
     <span class="comment">//</span>
     <span class="comment">// U+107FF: F0 90 9F BF</span>
     <span class="comment">// U+10800: F0 90 A0 80</span>
@@ -4240,10 +4333,10 @@
                             }
                         } <span class="kw">else</span> {
                             <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">byte</span>, <span class="number">0xEF</span>);
-                            <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAD</span>, <span class="number">0xB7</span>) {
-                                <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAD</span> {
+                            <span class="kw">if</span> <span class="ident">in_inclusive_range8</span>(<span class="ident">second</span>, <span class="number">0xAC</span>, <span class="number">0xB7</span>) {
+                                <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xAC</span> {
                                     <span class="kw">let</span> <span class="ident">third</span> <span class="op">=</span> <span class="ident">bytes</span>[<span class="ident">read</span> <span class="op">+</span> <span class="number">2</span>];
-                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x8F</span> {
+                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0x9C</span> {
                                         <span class="kw">return</span> <span class="bool-val">true</span>;
                                     }
                                 } <span class="kw">else</span> {
@@ -4253,6 +4346,11 @@
                                 <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xB9</span> {
                                     <span class="kw">let</span> <span class="ident">third</span> <span class="op">=</span> <span class="ident">bytes</span>[<span class="ident">read</span> <span class="op">+</span> <span class="number">2</span>];
                                     <span class="kw">if</span> <span class="ident">third</span> <span class="op">&gt;</span> <span class="number">0xAF</span> {
+                                        <span class="kw">return</span> <span class="bool-val">true</span>;
+                                    }
+                                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">second</span> <span class="op">==</span> <span class="number">0xBB</span> {
+                                    <span class="kw">let</span> <span class="ident">third</span> <span class="op">=</span> <span class="ident">bytes</span>[<span class="ident">read</span> <span class="op">+</span> <span class="number">2</span>];
+                                    <span class="kw">if</span> <span class="ident">third</span> <span class="op">!=</span> <span class="number">0xBF</span> {
                                         <span class="kw">return</span> <span class="bool-val">true</span>;
                                     }
                                 } <span class="kw">else</span> {
@@ -4292,11 +4390,14 @@
 <span class="doccomment">/// right-to-left processing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The check is done on a Unicode block basis without regard to assigned</span>
-<span class="doccomment">/// vs. unassigned code points in the block. Additionally, the four</span>
-<span class="doccomment">/// RIGHT-TO-LEFT FOO controls in General Punctuation are checked for.</span>
-<span class="doccomment">/// Control characters that are technically bidi controls but do not cause</span>
-<span class="doccomment">/// right-to-left behavior without the presence of right-to-left characters</span>
-<span class="doccomment">/// or right-to-left controls are not checked for.</span>
+<span class="doccomment">/// vs. unassigned code points in the block. Hebrew presentation forms in</span>
+<span class="doccomment">/// the Alphabetic Presentation Forms block are treated as if they formed</span>
+<span class="doccomment">/// a block on their own (i.e. it treated as right-to-left). Additionally,</span>
+<span class="doccomment">/// the four RIGHT-TO-LEFT FOO controls in General Punctuation are checked</span>
+<span class="doccomment">/// for. Control characters that are technically bidi controls but do not</span>
+<span class="doccomment">/// cause right-to-left behavior without the presence of right-to-left</span>
+<span class="doccomment">/// characters or right-to-left controls are not checked for. As a special</span>
+<span class="doccomment">/// case, U+FEFF is excluded from Arabic Presentation Forms-B.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Returns `true` if the input contains an RTL character or an unpaired</span>
 <span class="doccomment">/// high surrogate that could be the high half of an RTL character.</span>
@@ -4310,11 +4411,14 @@
 <span class="doccomment">/// Checks whether a code point triggers right-to-left processing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The check is done on a Unicode block basis without regard to assigned</span>
-<span class="doccomment">/// vs. unassigned code points in the block. Additionally, the four</span>
-<span class="doccomment">/// RIGHT-TO-LEFT FOO controls in General Punctuation are checked for.</span>
-<span class="doccomment">/// Control characters that are technically bidi controls but do not cause</span>
-<span class="doccomment">/// right-to-left behavior without the presence of right-to-left characters</span>
-<span class="doccomment">/// or right-to-left controls are not checked for.</span>
+<span class="doccomment">/// vs. unassigned code points in the block. Hebrew presentation forms in</span>
+<span class="doccomment">/// the Alphabetic Presentation Forms block are treated as if they formed</span>
+<span class="doccomment">/// a block on their own (i.e. it treated as right-to-left). Additionally,</span>
+<span class="doccomment">/// the four RIGHT-TO-LEFT FOO controls in General Punctuation are checked</span>
+<span class="doccomment">/// for. Control characters that are technically bidi controls but do not</span>
+<span class="doccomment">/// cause right-to-left behavior without the presence of right-to-left</span>
+<span class="doccomment">/// characters or right-to-left controls are not checked for. As a special</span>
+<span class="doccomment">/// case, U+FEFF is excluded from Arabic Presentation Forms-B.</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_char_bidi</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="comment">// Controls:</span>
@@ -4328,8 +4432,9 @@
     <span class="comment">// BMP RTL:</span>
     <span class="comment">// https://www.unicode.org/roadmaps/bmp/</span>
     <span class="comment">// U+0590...U+08FF</span>
-    <span class="comment">// U+FB50...U+FDFF Arabic Presentation Forms A</span>
-    <span class="comment">// U+FE70...U+FEFF Arabic Presentation Forms B</span>
+    <span class="comment">// U+FB1D...U+FDFF Hebrew presentation forms and</span>
+    <span class="comment">//                 Arabic Presentation Forms A</span>
+    <span class="comment">// U+FE70...U+FEFE Arabic Presentation Forms B (excl. BOM)</span>
     <span class="comment">//</span>
     <span class="comment">// Supplementary RTL:</span>
     <span class="comment">// https://www.unicode.org/roadmaps/smp/</span>
@@ -4340,8 +4445,8 @@
         <span class="comment">// Below Hebrew</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
-    <span class="kw">if</span> <span class="ident">in_range32</span>(<span class="ident">code_point</span>, <span class="number">0x0900</span>, <span class="number">0xFB50</span>) {
-        <span class="comment">// Above Arabic Extended-A and below Arabic Presentation Forms</span>
+    <span class="kw">if</span> <span class="ident">in_range32</span>(<span class="ident">code_point</span>, <span class="number">0x0900</span>, <span class="number">0xFB1D</span>) {
+        <span class="comment">// Above Arabic Extended-A and below Hebrew presentation forms</span>
         <span class="kw">if</span> <span class="ident">in_inclusive_range32</span>(<span class="ident">code_point</span>, <span class="number">0x200F</span>, <span class="number">0x2067</span>) {
             <span class="comment">// In the range that contains the RTL controls</span>
             <span class="kw">return</span> <span class="ident">code_point</span> <span class="op">==</span> <span class="number">0x200F</span>
@@ -4359,8 +4464,8 @@
         <span class="comment">// Between astral RTL blocks</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
-    <span class="kw">if</span> <span class="ident">in_range32</span>(<span class="ident">code_point</span>, <span class="number">0xFF00</span>, <span class="number">0x10800</span>) {
-        <span class="comment">// Above Arabic Presentations Forms B and below first</span>
+    <span class="kw">if</span> <span class="ident">in_range32</span>(<span class="ident">code_point</span>, <span class="number">0xFEFF</span>, <span class="number">0x10800</span>) {
+        <span class="comment">// Above Arabic Presentations Forms B (excl. BOM) and below first</span>
         <span class="comment">// astral RTL</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
@@ -4374,11 +4479,14 @@
 <span class="doccomment">/// Checks whether a UTF-16 code unit triggers right-to-left processing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The check is done on a Unicode block basis without regard to assigned</span>
-<span class="doccomment">/// vs. unassigned code points in the block. Additionally, the four</span>
-<span class="doccomment">/// RIGHT-TO-LEFT FOO controls in General Punctuation are checked for.</span>
-<span class="doccomment">/// Control characters that are technically bidi controls but do not cause</span>
-<span class="doccomment">/// right-to-left behavior without the presence of right-to-left characters</span>
-<span class="doccomment">/// or right-to-left controls are not checked for.</span>
+<span class="doccomment">/// vs. unassigned code points in the block. Hebrew presentation forms in</span>
+<span class="doccomment">/// the Alphabetic Presentation Forms block are treated as if they formed</span>
+<span class="doccomment">/// a block on their own (i.e. it treated as right-to-left). Additionally,</span>
+<span class="doccomment">/// the four RIGHT-TO-LEFT FOO controls in General Punctuation are checked</span>
+<span class="doccomment">/// for. Control characters that are technically bidi controls but do not</span>
+<span class="doccomment">/// cause right-to-left behavior without the presence of right-to-left</span>
+<span class="doccomment">/// characters or right-to-left controls are not checked for. As a special</span>
+<span class="doccomment">/// case, U+FEFF is excluded from Arabic Presentation Forms-B.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Since supplementary-plane right-to-left blocks are identifiable from the</span>
 <span class="doccomment">/// high surrogate without examining the low surrogate, this function returns</span>
@@ -4400,8 +4508,8 @@
         }
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
-    <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">u</span>, <span class="number">0xD83C</span>, <span class="number">0xFB50</span>) {
-        <span class="comment">// Between astral RTL high surrogates and Arabic Presentation Forms</span>
+    <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">u</span>, <span class="number">0xD83C</span>, <span class="number">0xFB1D</span>) {
+        <span class="comment">// Between astral RTL high surrogates and Hebrew presentation forms</span>
         <span class="comment">// (Emoji is here)</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
@@ -4409,8 +4517,8 @@
         <span class="comment">// Between RTL high surragates</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
-    <span class="kw">if</span> <span class="ident">u</span> <span class="op">&gt;</span> <span class="number">0xFEFF</span> {
-        <span class="comment">// Above Arabic Presentation Forms</span>
+    <span class="kw">if</span> <span class="ident">u</span> <span class="op">&gt;</span> <span class="number">0xFEFE</span> {
+        <span class="comment">// Above Arabic Presentation Forms (excl. BOM)</span>
         <span class="kw">return</span> <span class="bool-val">false</span>;
     }
     <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">u</span>, <span class="number">0xFE00</span>, <span class="number">0xFE70</span>) {
@@ -5432,13 +5540,14 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{1F4A9}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FE00}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{202C}&#39;</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FEFF}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{0590}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{08FF}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{061C}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FB50}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FDFF}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FE70}&#39;</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FEFF}&#39;</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{FEFE}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{200F}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{202B}&#39;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_char_bidi</span>(<span class="string">&#39;\u{202E}&#39;</span>));
@@ -5457,13 +5566,15 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xD801</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFE00</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x202C</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFEFF</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x0590</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x08FF</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x061C</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFB1D</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFB50</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFDFF</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFE70</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFEFF</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0xFEFE</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x200F</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x202B</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_code_unit_bidi</span>(<span class="number">0x202E</span>));
@@ -5482,13 +5593,14 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{1F4A9}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FE00}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{202C}abcdefghijklmnop&quot;</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{0590}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{08FF}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{061C}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FB50}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FDFF}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FE70}abcdefghijklmnop&quot;</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFE}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{200F}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{202B}abcdefghijklmnop&quot;</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_str_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{202E}abcdefghijklmnop&quot;</span>));
@@ -5519,6 +5631,9 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf8_bidi</span>(
             <span class="string">&quot;abcdefghijklmnop\u{202C}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
         ));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf8_bidi</span>(
+            <span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
+        ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf8_bidi</span>(
             <span class="string">&quot;abcdefghijklmnop\u{0590}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
         ));
@@ -5538,7 +5653,7 @@
             <span class="string">&quot;abcdefghijklmnop\u{FE70}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
         ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf8_bidi</span>(
-            <span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
+            <span class="string">&quot;abcdefghijklmnop\u{FEFE}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
         ));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf8_bidi</span>(
             <span class="string">&quot;abcdefghijklmnop\u{200F}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()
@@ -5592,6 +5707,10 @@
             <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0x202C</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
             <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
         ]));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
+            <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFF</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
+            <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
+        ]));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
             <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0x0590</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
             <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
@@ -5602,6 +5721,10 @@
         ]));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
             <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0x061C</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
+            <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
+        ]));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
+            <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFB1D</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
             <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
         ]));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
@@ -5617,7 +5740,7 @@
             <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
         ]));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
-            <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFF</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
+            <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFE</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>,
             <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
         ]));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span>[
@@ -5685,6 +5808,10 @@
             <span class="ident">check_str_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{202C}abcdefghijklmnop&quot;</span>),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
+        <span class="macro">assert_ne</span><span class="macro">!</span>(
+            <span class="ident">check_str_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>),
+            <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
+        );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">check_str_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{0590}abcdefghijklmnop&quot;</span>),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
@@ -5710,7 +5837,7 @@
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">check_str_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>),
+            <span class="ident">check_str_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFE}abcdefghijklmnop&quot;</span>),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
@@ -5773,6 +5900,10 @@
             <span class="ident">check_utf8_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{202C}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
+        <span class="macro">assert_ne</span><span class="macro">!</span>(
+            <span class="ident">check_utf8_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()),
+            <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
+        );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">check_utf8_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{0590}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
@@ -5798,7 +5929,7 @@
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">check_utf8_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFF}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()),
+            <span class="ident">check_utf8_for_latin1_and_bidi</span>(<span class="string">&quot;abcdefghijklmnop\u{FEFE}abcdefghijklmnop&quot;</span>.<span class="ident">as_bytes</span>()),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
@@ -5879,6 +6010,13 @@
             ]),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
         );
+        <span class="macro">assert_ne</span><span class="macro">!</span>(
+            <span class="ident">check_utf16_for_latin1_and_bidi</span>(<span class="kw-2">&amp;</span>[
+                <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFF</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
+                <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
+            ]),
+            <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
+        );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">check_utf16_for_latin1_and_bidi</span>(<span class="kw-2">&amp;</span>[
                 <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0x0590</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
@@ -5896,6 +6034,13 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">check_utf16_for_latin1_and_bidi</span>(<span class="kw-2">&amp;</span>[
                 <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0x061C</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
+                <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
+            ]),
+            <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
+        );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">check_utf16_for_latin1_and_bidi</span>(<span class="kw-2">&amp;</span>[
+                <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFB1D</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
                 <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
             ]),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
@@ -5923,7 +6068,7 @@
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">check_utf16_for_latin1_and_bidi</span>(<span class="kw-2">&amp;</span>[
-                <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFF</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
+                <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>, <span class="number">0xFEFE</span>, <span class="number">0x62</span>, <span class="number">0x63</span>, <span class="number">0x64</span>, <span class="number">0x65</span>,
                 <span class="number">0x66</span>, <span class="number">0x67</span>, <span class="number">0x68</span>, <span class="number">0x69</span>,
             ]),
             <span class="ident">Latin1Bidi</span>::<span class="ident">Bidi</span>
@@ -5998,8 +6143,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reference_is_char_bidi</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="ident">c</span> {
             <span class="string">&#39;\u{0590}&#39;</span>...<span class="string">&#39;\u{08FF}&#39;</span>
-            <span class="op">|</span> <span class="string">&#39;\u{FB50}&#39;</span>...<span class="string">&#39;\u{FDFF}&#39;</span>
-            <span class="op">|</span> <span class="string">&#39;\u{FE70}&#39;</span>...<span class="string">&#39;\u{FEFF}&#39;</span>
+            <span class="op">|</span> <span class="string">&#39;\u{FB1D}&#39;</span>...<span class="string">&#39;\u{FDFF}&#39;</span>
+            <span class="op">|</span> <span class="string">&#39;\u{FE70}&#39;</span>...<span class="string">&#39;\u{FEFE}&#39;</span>
             <span class="op">|</span> <span class="string">&#39;\u{10800}&#39;</span>...<span class="string">&#39;\u{10FFF}&#39;</span>
             <span class="op">|</span> <span class="string">&#39;\u{1E800}&#39;</span>...<span class="string">&#39;\u{1EFFF}&#39;</span>
             <span class="op">|</span> <span class="string">&#39;\u{200F}&#39;</span>
@@ -6014,8 +6159,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reference_is_utf16_code_unit_bidi</span>(<span class="ident">u</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="ident">u</span> {
             <span class="number">0x0590</span>...<span class="number">0x08FF</span>
-            <span class="op">|</span> <span class="number">0xFB50</span>...<span class="number">0xFDFF</span>
-            <span class="op">|</span> <span class="number">0xFE70</span>...<span class="number">0xFEFF</span>
+            <span class="op">|</span> <span class="number">0xFB1D</span>...<span class="number">0xFDFF</span>
+            <span class="op">|</span> <span class="number">0xFE70</span>...<span class="number">0xFEFE</span>
             <span class="op">|</span> <span class="number">0xD802</span>
             <span class="op">|</span> <span class="number">0xD803</span>
             <span class="op">|</span> <span class="number">0xD83A</span>
@@ -6108,6 +6253,19 @@
                 }
             }
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">is_utf8_bidi</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..]), <span class="ident">expect</span>);
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_is_utf16_bidi_thoroughly</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">32</span>];
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">0x10000u32</span> {
+            <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>;
+            <span class="ident">buf</span>[<span class="number">15</span>] <span class="op">=</span> <span class="ident">u</span>;
+            <span class="macro">assert_eq</span><span class="macro">!</span>(
+                <span class="ident">is_utf16_bidi</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..]),
+                <span class="ident">reference_is_utf16_code_unit_bidi</span>(<span class="ident">u</span>)
+            );
         }
     }
 
